@@ -1,0 +1,64 @@
+:is(.classes-section, .teachers-section, .students-section) {
+    max-width: 800px;
+    margin: 30px auto;
+    border: 5px solid var(--main-color);
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+:is(.classes, .teachers, .students) {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+:is(.class, .teacher, .student) {
+    display: flex;
+    border: 2px solid var(--main-color);
+    padding: 5px;
+    text-align: center;
+
+    & a {
+        display: flex;
+        flex: 1;
+        color: inherit;
+        text-decoration: none;
+    }
+
+    & span {
+        flex: 1;
+        &:not(:last-child) {
+            border-right: 2px solid var(--main-color);
+        }
+    }
+}
+
+.section-form {
+    width: 100%;
+    max-width: 500px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+}
+
+.delete-button {
+    background-color: #7f1d1d;
+}
+
+.create-link {
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 1rem;
+    align-self: flex-end;
+    cursor: pointer;
+    text-decoration: none;
+}

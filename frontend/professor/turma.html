@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Painel do Professor - Aulas, Né Pai</title>
+        <link
+            rel="shortcut icon"
+            href="../assets/logo.png"
+            type="image/x-icon"
+        />
+        <link rel="stylesheet" href="../style.css" />
+        <link rel="stylesheet" href="../styles/class-teacher.css" />
+        <script type="module" src="../scripts/class-teacher.js"></script>
+    </head>
+    <body>
+        <header class="header">
+            <img
+                src="../assets/logo-text.png"
+                alt="Aulas, né pai"
+                class="logo"
+            />
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#">Painel Principal</a>
+                    </li>
+                    <li>
+                        <a href="./turma.html">Turmas</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main class="teacher-main">
+            <h1>Gestão de Alunos</h1>
+
+            <nav class="menu">
+                <button id="gradeBtn" class="active">Notas</button>
+                <button id="attendanceBtn">Presença</button>
+            </nav>
+
+            <section id="gradesSection" class="section active">
+                <h2>Tabela de Notas</h2>
+                <button id="addGradeBtn">Adicionar Nova Nota</button>
+                <table id="gradeTable">
+                    <thead>
+                        <tr>
+                            <th>Aluno</th>
+                            <th>Nota 1</th>
+                            <th>Nota 2</th>
+                            <th>Nota 3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>João</td>
+                            <td contenteditable="true">7</td>
+                            <td contenteditable="true">8</td>
+                            <td contenteditable="true">9</td>
+                        </tr>
+                        <tr>
+                            <td>Maria</td>
+                            <td contenteditable="true">10</td>
+                            <td contenteditable="true">9</td>
+                            <td contenteditable="true">10</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="attendanceSection" class="section">
+                <h2>Tabela de Presença - Mês Atual</h2>
+                <table id="attendanceTable">
+                    <thead>
+                        <tr>
+                            <th>Aluno</th>
+                            <!-- Dias serão gerados pelo JS -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>João</td>
+                            <!-- Presenças serão geradas pelo JS -->
+                        </tr>
+                        <tr>
+                            <td>Maria</td>
+                            <!-- Presenças serão geradas pelo JS -->
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </body>
+</html>

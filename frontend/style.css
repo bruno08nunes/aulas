@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap%27');
+ 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+ 
+:root {
+    --main-color: #012340;
+    --secondary-color: #03A63C;
+    --light-green: #04D939;
+    --red: #E80000;
+}
+ 
+body {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100svh;
+}
+ 
+.header {
+    background-color: var(--main-color);
+    color: white;
+    padding: 15px;
+    font-size: 1.4em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    & ul {
+        list-style: none;
+        display: flex;
+        gap: 15px;
+    }
+
+    & a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.logo {
+    max-width: 120px;
+}
+ 
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    padding: 15px;
+    flex: 1;
+}
+
+.title {
+    font-size: 2em;
+}
+
+.description {
+    font-size: 1.3em;
+    max-width: 800px;
+    text-align: justify;
+    margin-bottom: 30px;
+}
+ 
+.section-form {
+    border: 3px solid var(--main-color);
+    border-radius: 15px;
+    display: flex;
+ 
+    & > * {
+        flex-grow: 1;
+    }
+}
+
+.img-form-div {
+    padding: 50px 30px;
+    background-color: var(--main-color);
+}
+ 
+.form-img {
+    max-width: 300px;
+}
+ 
+.login-form, .form {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+    width: 100%;
+    font-size: 1.2em;
+}
+ 
+.form-title {
+    text-align: center;
+    font-weight: normal;
+}
+ 
+.input-div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+ 
+.input-div :is(input, select) {
+    font-size: 0.9em;
+    padding: 3px;
+    border-radius: 10px;
+    border-style: solid;
+}
+ 
+.button {
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 1rem;
+    align-self: flex-end;
+    cursor: pointer;
+}

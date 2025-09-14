@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Painel do Pedagogo - Aulas, Né Pai</title>
+        <link
+            rel="shortcut icon"
+            href="../assets/logo.png"
+            type="image/x-icon"
+        />
+        <link rel="stylesheet" href="../style.css" />
+        <link rel="stylesheet" href="../styles/pedagogue.css" />
+    </head>
+    <body>
+        <header class="header">
+            <img
+                src="../assets/logo-text.png"
+                alt="Aulas, né pai"
+                class="logo"
+            />
+            <nav>
+                <ul>
+                    <li>
+                        <a href="./index.html">Painel Principal</a>
+                    </li>
+                    <li>
+                        <a href="./turma.html">Turmas</a>
+                    </li>
+                    <li>
+                        <a href="./professor.html">Professor</a>
+                    </li>
+                    <li>
+                        <a href="./aluno.html">Alunos</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main class="main">
+            <section class="section-form">
+                <form class="form">
+                    <form class="form">
+                        <h2 class="form-title">Editar Professor</h2>
+                        <div class="input-div">
+                            <label for="name">Nome:</label>
+                            <input
+                                type="text"
+                                name="name"
+                                id="name"
+                                placeholder="Nome"
+                            />
+                        </div>
+                        <div class="input-div">
+                            <label for="subject">Matérias:</label>
+                            <select name="subject" id="subject" multiple>
+                                <option value="matematica">Matemática</option>
+                                <option value="portugues">Português</option>
+                                <option value="geografia">Geografia</option>
+                                <option value="tecnico">Técnico</option>
+                            </select>
+                        </div>
+                        <div class="input-div">
+                            <label for="birthday">Data de Nascimento:</label>
+                            <input
+                                type="date"
+                                name="birthday"
+                                id="birthday"
+                                placeholder="Ano"
+                            />
+                        </div>
+                        <div class="buttons">
+                            <button class="button delete-button">Deletar</button>
+                            <button class="button">Enviar</button>
+                        </div>
+                    </form>
+                </form>
+            </section>
+        </main>
+    </body>
+</html>

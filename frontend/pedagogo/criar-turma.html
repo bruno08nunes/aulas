@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Painel do Pedagogo - Aulas, Né Pai</title>
+        <link
+            rel="shortcut icon"
+            href="../assets/logo.png"
+            type="image/x-icon"
+        />
+        <link rel="stylesheet" href="../styles/pedagogue.css" />
+        <link rel="stylesheet" href="../style.css" />
+    </head>
+    <body>
+        <header class="header">
+            <img
+                src="../assets/logo-text.png"
+                alt="Aulas, né pai"
+                class="logo"
+            />
+            <nav>
+                <ul>
+                    <li>
+                        <a href="./index.html">Painel Principal</a>
+                    </li>
+                    <li>
+                        <a href="./turma.html">Turmas</a>
+                    </li>
+                    <li>
+                        <a href="./professor.html">Professor</a>
+                    </li>
+                    <li>
+                        <a href="./aluno.html">Alunos</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main class="main">
+            <section class="section-form">
+                <form class="form">
+                    <form class="form">
+                        <h2 class="form-title">Criar Turma</h2>
+                        <div class="input-div">
+                            <label for="classname">Nome da Turma:</label>
+                            <input
+                                type="text"
+                                name="classname"
+                                id="classname"
+                                placeholder="Nome"
+                            />
+                        </div>
+                        <div class="input-div">
+                            <label for="shift">Turno:</label>
+                            <input
+                                type="text"
+                                name="shift"
+                                id="shift"
+                                placeholder="Turno"
+                            />
+                        </div>
+                        <div class="input-div">
+                            <label for="year">Ano:</label>
+                            <input
+                                type="text"
+                                name="year"
+                                id="year"
+                                placeholder="Ano"
+                            />
+                        </div>
+                        <button class="button">Enviar</button>
+                    </form>
+                </form>
+            </section>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Painel do Aluno - Aulas, Né Pai</title>
+        <link
+            rel="shortcut icon"
+            href="../assets/logo.png"
+            type="image/x-icon"
+        />
+        <link rel="stylesheet" href="../style.css" />
+        <link rel="stylesheet" href="../styles/student.css" />
+        <script type="module" src="../scripts/student.js"></script>
+    </head>
+    <body>
+        <header class="header">
+            <img
+                src="../assets/logo-text.png"
+                alt="Aulas, né pai"
+                class="logo"
+            />
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#">Painel Principal</a>
+                    </li>
+                    <li>
+                        <a href="./turma.html">Turmas</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main class="main">
+            <section class="student-section">
+                <img
+                    src="https://cdn-icons-png.flaticon.com/512/5987/5987462.png"
+                    alt=""
+                    class="profile-picture"
+                />
+                <div>
+                    <h1>Maria Luiza Acosta de Aquino</h1>
+                    <p>
+                        Seja bem-vindo(a)! Nessa seção você pode ver suas
+                        turmas, histórico de presenças e faltas e consultar suas
+                        notas.
+                    </p>
+                </div>
+            </section>
+            <section class="class-section">
+                <h2>Turmas</h2>
+                <div class="classes">
+                    <div class="class">
+                        <a href="./turma.html">
+                            <span>3AT</span>
+                            <span>3° Ano</span>
+                            <span>SENAC</span>
+                            <span>Tarde</span>
+                            <span>15 alunos</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            <section class="roll-call-section">
+                <header class="roll-call-header">
+                    <div>
+                        <h2>Registro de Presença</h2>
+                        <div class="subtitle">
+                            Visualize a presença por disciplina em cada período
+                            do dia.
+                        </div>
+                    </div>
+                    <div class="controls">
+                        <div
+                            class="month-nav"
+                            role="tablist"
+                            aria-label="Navegação de meses"
+                        >
+                            <button id="prevMonth" aria-label="Mês anterior">
+                                ◀
+                            </button>
+                            <div class="month-label-container">
+                                <strong id="monthLabel">Mês Ano</strong>
+                            </div>
+                            <button id="nextMonth" aria-label="Próximo mês">
+                                ▶
+                            </button>
+                        </div>
+                        <select
+                            id="monthSelect"
+                            aria-label="Selecionar mês"
+                        ></select>
+                    </div>
+                </header>
+
+                <div class="summary" aria-live="polite">
+                    <div class="chip">
+                        Total de dias no mês: <strong id="totalDays">0</strong>
+                    </div>
+                    <div class="chip">
+                        Presentes: <strong id="presentCount">0</strong>
+                    </div>
+                    <div class="chip">
+                        Faltas: <strong id="absentCount">0</strong>
+                    </div>
+                </div>
+
+                <table id="attendanceTable" aria-describedby="monthLabel">
+                    <thead>
+                        <tr>
+                            <th>Dia</th>
+                            <th>Dia da semana</th>
+                            <th>1º Período</th>
+                            <th>2º Período</th>
+                            <th>3º Período</th>
+                            <th>4º Período</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+        </main>
+    </body>
+</html>
