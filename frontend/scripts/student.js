@@ -5,6 +5,18 @@ const monthSelect = document.getElementById("monthSelect");
 const prevBtn = document.getElementById("prevMonth");
 const nextBtn = document.getElementById("nextMonth");
 
+const getMe = async () => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("http://localhost:3333/me", {
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+    });
+    const result = await res.json();
+    console.log(result);
+}
+
 prevBtn.addEventListener("click", () => {
     const currentYear = new Date().getFullYear();
     
@@ -43,3 +55,4 @@ monthSelect.addEventListener("change", (e) => {
 
 populateMonthSelect();
 render();
+getMe();

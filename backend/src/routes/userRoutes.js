@@ -6,8 +6,10 @@ import {
   getTeachers,
   getStudents,
   getPedagogues,
-  login
+  login,
+  getMe
 } from "../controllers/userController.js";
+import { verifyToken } from "../middleware/token-middleware.js";
 
 const userRouter = express.Router();
 
@@ -16,6 +18,7 @@ userRouter.put("/users/:id", updateUser);
 userRouter.delete("/users/:id", deleteUser);
 
 userRouter.post("/login", login);
+userRouter.get("/me", verifyToken, getMe);
 
 // Novas rotas específicas
 userRouter.get("/teachers", getTeachers);

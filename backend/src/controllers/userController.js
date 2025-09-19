@@ -97,8 +97,35 @@ export const login = async (req, res) => {
     res.status(200).json({
         message: "Login bem-sucedido!",
         data: { ...user, password: undefined },
-        token
+        token,
     });
+};
+
+export const getMe = async (req, res) => {
+    try {
+        const { id, role } = req.user;
+
+        const [user] = await db.query(
+            "SELECT id, name, email, cellphone, birth_date FROM users WHERE id = ?",
+            [id]
+        );
+
+        if (user.length === 0) {
+            return res.status(404).json({ error: "Usuário não encontrado" });
+        }
+
+        res.status(200).json({
+            id: user[0].id,
+            name: user[0].name,
+            email: user[0].email,
+            cellphone: user[0].cellphone,
+            birth_date: user[0].birth_date,
+            role,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Erro interno do servidor" });
+    }
 };
 
 export const getTeachers = async (req, res) => {
