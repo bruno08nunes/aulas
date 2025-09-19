@@ -1,4 +1,4 @@
-:is(.classes-section, .teachers-section, .students-section) {
+:is(.classes-section, .teachers-section, .students-section, .pedagogues-section) {
     max-width: 800px;
     margin: 30px auto;
     border: 5px solid var(--main-color);
@@ -9,13 +9,13 @@
     gap: 15px;
 }
 
-:is(.classes, .teachers, .students) {
+:is(.classes, .teachers, .students, .pedagogues) {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-:is(.class, .teacher, .student) {
+:is(.class, .teacher, .student, .pedagogue) {
     display: flex;
     border: 2px solid var(--main-color);
     padding: 5px;
