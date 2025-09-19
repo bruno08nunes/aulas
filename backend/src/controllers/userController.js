@@ -1,5 +1,7 @@
 import { db } from "../config/db.js";
 import bcrypt from "bcrypt";
+import { env } from "../config/env.js";
+import jwt from "jsonwebtoken";
 
 export const createUser = async (req, res) => {
     const { name, email, password, cellphone, birth_date, type, registration } =
@@ -39,6 +41,64 @@ export const createUser = async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+};
+
+export const login = async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res
+            .status(400)
+            .json({ error: "Username e password são obrigatórios" });
+    }
+
+    const [rows] = await db.query(
+        `
+    SELECT 
+        u.*, 
+        CASE 
+            WHEN t.user_id IS NOT NULL THEN 'teacher'
+            WHEN s.user_id IS NOT NULL THEN 'student'
+            WHEN p.user_id IS NOT NULL THEN 'pedagogue'
+            ELSE NULL
+        END AS role
+        FROM users u
+        LEFT JOIN teachers t ON u.id = t.user_id
+        LEFT JOIN students s ON u.id = s.user_id
+        LEFT JOIN pedagogues p ON u.id = p.user_id
+        WHERE u.email = ?;
+    `,
+        [email]
+    );
+
+    if (rows.length === 0) {
+        return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+
+    const user = rows[0];
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+        return res.status(401).json({ error: "Senha incorreta" });
+    }
+
+    const SECRET_KEY = env.JWT_SECRET || "seu_segredo_supersecreto";
+    const token = jwt.sign(
+        {
+            id: user.id,
+            email: user.email,
+            role: user.role,
+        },
+        SECRET_KEY,
+        { expiresIn: "1h" }
+    );
+
+    res.status(200).json({
+        message: "Login bem-sucedido!",
+        data: { ...user, password: undefined },
+        token
+    });
 };
 
 export const getTeachers = async (req, res) => {

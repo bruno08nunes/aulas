@@ -5,7 +5,8 @@ import {
   deleteUser,
   getTeachers,
   getStudents,
-  getPedagogues
+  getPedagogues,
+  login
 } from "../controllers/userController.js";
 
 const userRouter = express.Router();
@@ -13,6 +14,8 @@ const userRouter = express.Router();
 userRouter.post("/users", createUser);
 userRouter.put("/users/:id", updateUser);
 userRouter.delete("/users/:id", deleteUser);
+
+userRouter.post("/login", login);
 
 // Novas rotas específicas
 userRouter.get("/teachers", getTeachers);
