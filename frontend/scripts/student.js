@@ -10,16 +10,48 @@ const getMe = async () => {
 
     const res = await fetch("http://localhost:3333/me", {
         headers: {
-            "Authorization": "Bearer " + token
+            Authorization: "Bearer " + token,
         },
     });
     const result = await res.json();
-    console.log(result);
-}
+
+    const studentNameElement = document.querySelector(".student-name");
+    studentNameElement.textContent = result.name;
+};
+
+const listMyClasses = async () => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("http://localhost:3333/my-classes", {
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+    });
+    const result = await res.json();
+
+    const classes = document.querySelector(".classes");
+    for (let pos of result) {
+        const shiftTranslate = {
+            morning: "Manhã",
+            afternoon: "Tarde",
+            night: "Noite",
+        };
+        classes.innerHTML += `
+            <div class="class">
+                <a href="./turma.html?id=${pos.id}">
+                    <span>${pos.name}</span>
+                    <span>${pos.grade_level}° Ano</span>
+                    <span>${shiftTranslate[pos.shift]}</span>
+                    <span>${pos.creation_year}</span>
+                </a>
+            </div>
+        `;
+    }
+};
 
 prevBtn.addEventListener("click", () => {
     const currentYear = new Date().getFullYear();
-    
+
     if (state.month === 0 && state.year < currentYear - 1) {
         return;
     }
@@ -37,7 +69,7 @@ nextBtn.addEventListener("click", () => {
     if (state.month === 11 && state.year === currentYear) {
         return;
     }
-    
+
     state.month += 1;
     if (state.month > 11) {
         state.month = 0;
@@ -56,3 +88,4 @@ monthSelect.addEventListener("change", (e) => {
 populateMonthSelect();
 render();
 getMe();
+listMyClasses();

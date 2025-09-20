@@ -64,6 +64,35 @@ const listPedagogues = async () => {
     }
 };
 
+const listClasses = async () => {
+    const res = await fetch("http://localhost:3333/classes");
+    const result = await res.json();
+
+    if (!res.ok) {
+        return;
+    }
+
+    const classes = document.querySelector(".classes");
+    for (let pos of result) {
+        const shiftTranslate = {
+            morning: "Manhã",
+            afternoon: "Tarde",
+            night: "Noite"
+        }
+        classes.innerHTML += `
+            <div class="class">
+                <a href="./turma.html?id=${pos.id}">
+                    <span>${pos.name}</span>
+                    <span>${pos.grade_level}° Ano</span>
+                    <span>${shiftTranslate[pos.shift]}</span>
+                    <span>${pos.creation_year}</span>
+                </a>
+            </div>
+        `;
+    }
+};
+
 listTeacher();
 listStudent();
 listPedagogues();
+listClasses();

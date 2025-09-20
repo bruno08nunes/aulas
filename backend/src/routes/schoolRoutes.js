@@ -7,12 +7,12 @@ import {
   deleteSchool
 } from "../controllers/schoolController.js";
 
-const router = express.Router();
+const schoolRouter = express.Router();
 
-router.post("/", createSchool);
-router.get("/", getSchools);
-router.get("/:id", getSchoolById);
-router.put("/:id", updateSchool);
-router.delete("/:id", deleteSchool);
+schoolRouter.post("/", createSchool);
+schoolRouter.get("/", getSchools);
+schoolRouter.get("/:id", getSchoolById);
+schoolRouter.put("/:id", updateSchool);
+schoolRouter.delete("/:id", deleteSchool);
 
-export default router;
+export default schoolRouter;

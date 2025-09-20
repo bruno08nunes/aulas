@@ -1,3 +1,18 @@
+const userId = new URLSearchParams(location.search).get("id");
+let user;
+
+const getUser = async () => {
+    const res = await fetch("http://localhost:3333/users/" + userId);
+    const result = await res.json();
+    user = result;
+
+    document.querySelector("#name").value = result.name;
+    document.querySelector("#email").value = result.email;
+    document.querySelector("#cellphone").value = result.cellphone;
+};
+
+getUser();
+
 const listSubjects = async () => {
     const res = await fetch("http://localhost:3333/subjects");
     const result = await res.json();
@@ -18,7 +33,6 @@ form.addEventListener("submit", async (e) => {
     const email = document.querySelector("#email").value;
     const password = document.querySelector("#password").value;
     const cellphone = document.querySelector("#cellphone").value;
-    const birthDate = document.querySelector("#birthDate").value;
 
     const subjectsElement = document.querySelector("#subject");
     var selectedOptions = [];
@@ -29,8 +43,8 @@ form.addEventListener("submit", async (e) => {
         }
     }
 
-    const res = await fetch("http://localhost:3333/users", {
-        method: "POST",
+    const res = await fetch("http://localhost:3333/users/" + userId, {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },
@@ -39,8 +53,6 @@ form.addEventListener("submit", async (e) => {
             email,
             password,
             cellphone,
-            birth_date: birthDate,
-            type: "teacher",
         }),
     });
     const result = await res.json();
@@ -53,13 +65,31 @@ form.addEventListener("submit", async (e) => {
         const res = await fetch("http://localhost:3333/teachers/sync", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({ teacherId: result.typeId, subjects: selectedOptions })
+            body: JSON.stringify({
+                teacherId: user.teacher_id,
+                subjects: selectedOptions,
+            }),
         });
     }
 
     location.pathname = "frontend/pedagogo";
 });
 
-listSubjects();
+document
+    .querySelector(".delete-button")
+    ?.addEventListener("click", async () => {
+        const res = await fetch("http://localhost:3333/users/" + userId, {
+            method: "DELETE",
+        });
+
+        if (!res.ok) {
+            alert("Erro");
+            return;
+        }
+
+        location.pathname = "frontend/pedagogo";
+    });
+
+listClasses();

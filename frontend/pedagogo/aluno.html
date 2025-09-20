@@ -11,6 +11,7 @@
         />
         <link rel="stylesheet" href="../style.css" />
         <link rel="stylesheet" href="../styles/pedagogue.css" />
+        <script defer src="../scripts/edit-student.js"></script>
     </head>
     <body>
         <header class="header">
@@ -39,7 +40,6 @@
         <main class="main">
             <section class="section-form">
                 <form class="form">
-                    <form class="form">
                         <h2 class="form-title">Editar Aluno</h2>
                         <div class="input-div">
                             <label for="name">Nome:</label>
@@ -51,27 +51,41 @@
                             />
                         </div>
                         <div class="input-div">
-                            <label for="class">Turma:</label>
-                            <select name="class" id="class">
-                                <option>1AT</option>
-                                <option>2AT</option>
-                                <option>3AT</option>
-                            </select>
-                        </div>
-                        <div class="input-div">
-                            <label for="birthday">Data de Nascimento:</label>
+                            <label for="email">Email:</label>
                             <input
-                                type="date"
-                                name="birthday"
-                                id="birthday"
-                                placeholder="Nome"
+                                type="email"
+                                name="email"
+                                id="email"
+                                placeholder="Email"
                             />
                         </div>
+                        <div class="input-div">
+                            <label for="password">Senha:</label>
+                            <input
+                                type="password"
+                                name="password"
+                                id="password"
+                                placeholder="Senha"
+                            />
+                        </div>
+                        <div class="input-div">
+                            <label for="cellphone">Telefone:</label>
+                            <input
+                                type="tel"
+                                name="cellphone"
+                                id="cellphone"
+                                placeholder="Telefone"
+                            />
+                        </div>
+                        <div class="input-div">
+                            <label for="class">Turma:</label>
+                            <select name="class" id="class" multiple>
+                            </select>
+                        </div>
                         <div class="buttons">
-                            <button class="button delete-button">Deletar</button>
+                            <button class="button delete-button" type="button">Deletar</button>
                             <button class="button">Enviar</button>
                         </div>
-                    </form>
                 </form>
             </section>
         </main>

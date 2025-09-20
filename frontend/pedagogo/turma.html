@@ -11,6 +11,7 @@
         />
         <link rel="stylesheet" href="../style.css" />
         <link rel="stylesheet" href="../styles/pedagogue.css" />
+        <script defer src="../scripts/edit-class.js"></script>
     </head>
     <body>
         <header class="header">
@@ -39,40 +40,37 @@
         <main class="main">
             <section class="section-form">
                 <form class="form">
-                    <form class="form">
-                        <h2 class="form-title">Editar Turma</h2>
-                        <div class="input-div">
-                            <label for="classname">Nome da Turma:</label>
-                            <input
-                                type="text"
-                                name="classname"
-                                id="classname"
-                                placeholder="Nome"
-                            />
-                        </div>
-                        <div class="input-div">
-                            <label for="shift">Turno:</label>
-                            <input
-                                type="text"
-                                name="shift"
-                                id="shift"
-                                placeholder="Turno"
-                            />
-                        </div>
-                        <div class="input-div">
-                            <label for="year">Ano:</label>
-                            <input
-                                type="text"
-                                name="year"
-                                id="year"
-                                placeholder="Ano"
-                            />
-                        </div>
-                        <div class="buttons">
-                            <button class="button delete-button">Deletar</button>
-                            <button class="button">Enviar</button>
-                        </div>
-                    </form>
+                    <h2 class="form-title">Editar Turma</h2>
+                    <div class="input-div">
+                        <label for="name">Nome da Turma:</label>
+                        <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            placeholder="Nome"
+                        />
+                    </div>
+                    <div class="input-div">
+                        <label for="shift">Turno:</label>
+                        <select name="shift" id="shift">
+                            <option value="morning">Manhã</option>
+                            <option value="afternoon">Tarde</option>
+                            <option value="night">Noite</option>
+                        </select>
+                    </div>
+                    <div class="input-div">
+                        <label for="grade_level">Ano Escolar:</label>
+                        <input
+                            type="text"
+                            name="grade_level"
+                            id="grade_level"
+                            placeholder="Ano"
+                        />
+                    </div>
+                    <div class="buttons">
+                        <button class="delete-button button" type="button">Deletar</button>
+                        <button class="button">Enviar</button>
+                    </div>
                 </form>
             </section>
         </main>

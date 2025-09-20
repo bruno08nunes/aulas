@@ -7,39 +7,57 @@ export const createUser = async (req, res) => {
     const { name, email, password, cellphone, birth_date, type, registration } =
         req.body;
 
+    const connection = await db.getConnection();
     try {
+        await connection.beginTransaction();
+
+        // 🔎 Validação ANTES de criar o user
+        if (type === "student" && !registration) {
+            await connection.rollback();
+            return res
+                .status(400)
+                .json({ error: "Matrícula obrigatória para aluno." });
+        }
+
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const [userResult] = await db.query(
+        // Criar user
+        const [userResult] = await connection.query(
             "INSERT INTO users (name, email, password, cellphone, birth_date) VALUES (?, ?, ?, ?, ?)",
             [name, email, hashedPassword, cellphone, birth_date]
         );
 
         const userId = userResult.insertId;
+        let typeId;
 
         if (type === "teacher") {
-            await db.query("INSERT INTO teachers (user_id) VALUES (?)", [
-                userId,
-            ]);
+            const [result] = await connection.query(
+                "INSERT INTO teachers (user_id) VALUES (?)",
+                [userId]
+            );
+            typeId = result.insertId;
         } else if (type === "student") {
-            if (!registration) {
-                return res
-                    .status(400)
-                    .json({ error: "Matrícula obrigatória para aluno." });
-            }
-            await db.query(
+            const [result] = await connection.query(
                 "INSERT INTO students (user_id, registration) VALUES (?, ?)",
                 [userId, registration]
             );
+            typeId = result.insertId;
         } else if (type === "pedagogue") {
-            await db.query("INSERT INTO pedagogues (user_id) VALUES (?)", [
-                userId,
-            ]);
+            const [result] = await connection.query(
+                "INSERT INTO pedagogues (user_id) VALUES (?)",
+                [userId]
+            );
+            typeId = result.insertId;
         }
 
-        res.status(201).json({ id: userId, name, email, type });
+        await connection.commit();
+
+        res.status(201).json({ id: userId, name, email, type, typeId });
     } catch (err) {
+        await connection.rollback();
         res.status(500).json({ error: err.message });
+    } finally {
+        connection.release();
     }
 };
 
@@ -99,6 +117,40 @@ export const login = async (req, res) => {
         data: { ...user, password: undefined },
         token,
     });
+};
+
+export const getUserById = async (req, res) => {
+    const [rows] = await db.query(
+        `
+            SELECT 
+                u.id,
+                u.name,
+                u.email,
+                u.cellphone,
+                u.birth_date,
+                CASE 
+                    WHEN t.user_id IS NOT NULL THEN 'teacher'
+                    WHEN s.user_id IS NOT NULL THEN 'student'
+                    WHEN p.user_id IS NOT NULL THEN 'pedagogue'
+                    ELSE 'undefined'
+                END AS type,
+                s.registration,
+                t.id AS teacher_id,
+                s.id AS student_id,
+                p.id AS pedagogue_id
+                FROM users u
+                LEFT JOIN teachers t ON u.id = t.user_id
+                LEFT JOIN students s ON u.id = s.user_id
+                LEFT JOIN pedagogues p ON u.id = p.user_id
+                WHERE u.id = ?
+  `,
+        [req.params.id]
+    );
+
+    if (rows.length === 0)
+        return res.status(404).json({ message: "Usuário não encontrado" });
+
+    res.json(rows[0]);
 };
 
 export const getMe = async (req, res) => {
@@ -167,9 +219,89 @@ export const getPedagogues = async (req, res) => {
     }
 };
 
+export const syncTeacherSubjects = async (req, res) => {
+    const { teacherId, subjects } = req.body;
+
+    if (!teacherId || !Array.isArray(subjects)) {
+        return res
+            .status(400)
+            .json({ error: "Informe teacherId e um array de subjects" });
+    }
+
+    const connection = await db.getConnection();
+    try {
+        await connection.beginTransaction();
+
+        // 1. Apaga os vínculos que não estão no array
+        await connection.query(
+            `DELETE FROM teacher_subject 
+       WHERE teacher_id = ? 
+       AND subject_id NOT IN (?)`,
+            [teacherId, subjects.length > 0 ? subjects : [0]] // evita erro se o array for vazio
+        );
+
+        // 2. Adiciona vínculos novos (ignora se já existe)
+        for (const subjectId of subjects) {
+            await connection.query(
+                `INSERT IGNORE INTO teacher_subject (teacher_id, subject_id) VALUES (?, ?)`,
+                [teacherId, subjectId]
+            );
+        }
+
+        await connection.commit();
+        res.json({
+            message: "Relações professor-matérias atualizadas com sucesso",
+        });
+    } catch (err) {
+        await connection.rollback();
+        res.status(500).json({ error: err.message });
+    } finally {
+        connection.release();
+    }
+};
+
+export const syncStudentClasses = async (req, res) => {
+    const { studentId, classes } = req.body;
+
+    if (!studentId || !Array.isArray(classes)) {
+        return res
+            .status(400)
+            .json({ error: "Informe studentId e um array de classes" });
+    }
+
+    const connection = await db.getConnection();
+    try {
+        await connection.beginTransaction();
+
+        // 1. Remover vínculos que não estão no array
+        await connection.query(
+            `DELETE FROM student_registration
+       WHERE student_id = ?
+       AND class_id NOT IN (?)`,
+            [studentId, classes.length > 0 ? classes : [0]] // se o array for vazio, deleta todos
+        );
+
+        // 2. Inserir vínculos novos
+        for (const classId of classes) {
+            await connection.query(
+                `INSERT IGNORE INTO student_registration (student_id, class_id)
+         VALUES (?, ?)`,
+                [studentId, classId]
+            );
+        }
+
+        await connection.commit();
+        res.json({ message: "Relações aluno-turmas atualizadas com sucesso" });
+    } catch (err) {
+        await connection.rollback();
+        res.status(500).json({ error: err.message });
+    } finally {
+        connection.release();
+    }
+};
+
 export const updateUser = async (req, res) => {
-    const { name, email, password, cellphone, birth_date, registration } =
-        req.body;
+    const { name, email, password, cellphone } = req.body;
 
     try {
         let hashedPassword;
@@ -178,17 +310,9 @@ export const updateUser = async (req, res) => {
         }
 
         await db.query(
-            "UPDATE users SET name=?, email=?, password=COALESCE(?, password), cellphone=?, birth_date=? WHERE id=?",
-            [name, email, hashedPassword, cellphone, birth_date, req.params.id]
+            "UPDATE users SET name=?, email=?, password=COALESCE(?, password), cellphone=? WHERE id=?",
+            [name, email, hashedPassword, cellphone, req.params.id]
         );
-
-        // Atualiza matrícula se for aluno
-        if (registration) {
-            await db.query(
-                "UPDATE students SET registration=? WHERE user_id=?",
-                [registration, req.params.id]
-            );
-        }
 
         res.json({ message: "Usuário atualizado" });
     } catch (err) {
