@@ -1,3 +1,5 @@
+Nome: Bruno Nunes e Maria Luiza
+
 Esta é a fase de construir o "cérebro" da aplicação, implementando a lógica de negócios e a comunicação com o banco de dados.
 
 Atividades:

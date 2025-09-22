@@ -9,6 +9,8 @@ const listSubjects = async () => {
     }
 };
 
+const token = localStorage.getItem("token");
+
 const form = document.querySelector(".form");
 
 form.addEventListener("submit", async (e) => {
@@ -33,6 +35,7 @@ form.addEventListener("submit", async (e) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
         },
         body: JSON.stringify({
             name,

@@ -1,4 +1,5 @@
 const form = document.querySelector(".form");
+const token = localStorage.getItem("token");
 
 const listSchools = async () => {
     const res = await fetch("http://localhost:3333/schools");
@@ -22,6 +23,7 @@ form.addEventListener("submit", async (e) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
         },
         body: JSON.stringify({
             name,

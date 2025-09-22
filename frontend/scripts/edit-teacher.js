@@ -1,6 +1,8 @@
 const userId = new URLSearchParams(location.search).get("id");
 let user;
 
+const token = localStorage.getItem("token");
+
 const getUser = async () => {
     const res = await fetch("http://localhost:3333/users/" + userId);
     const result = await res.json();
@@ -47,6 +49,7 @@ form.addEventListener("submit", async (e) => {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
         },
         body: JSON.stringify({
             name,
@@ -82,6 +85,9 @@ document
     ?.addEventListener("click", async () => {
         const res = await fetch("http://localhost:3333/users/" + userId, {
             method: "DELETE",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
         });
 
         if (!res.ok) {

@@ -13,13 +13,14 @@ import {
   syncStudentClasses
 } from "../controllers/userController.js";
 import { verifyToken } from "../middleware/token-middleware.js";
+import { isPedagogue } from "../middleware/is-pedagogue-middleware.js";
 
 const userRouter = express.Router();
 
-userRouter.post("/users", createUser);
+userRouter.post("/users", verifyToken, isPedagogue, createUser);
 userRouter.get("/users/:id", getUserById);
-userRouter.put("/users/:id", updateUser);
-userRouter.delete("/users/:id", deleteUser);
+userRouter.put("/users/:id", verifyToken, isPedagogue, updateUser);
+userRouter.delete("/users/:id", verifyToken, isPedagogue, deleteUser);
 
 userRouter.post("/login", login);
 userRouter.get("/me", verifyToken, getMe);
