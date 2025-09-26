@@ -1,17 +1,26 @@
 Nome: Bruno Nunes e Maria Luiza
 
-Esta é a fase de construir o "cérebro" da aplicação, implementando a lógica de negócios e a comunicação com o banco de dados.
+# Descrição
 
-Atividades:
+Esse projeto tem como objetivo desenvolver uma aplicação para auxiliar professores e alunos no dia a dia para a organização das aulas.
 
-Criação da API: Desenvolva uma API (preferencialmente RESTful) com endpoints para todas as funcionalidades do frontend.
-Exemplos: POST /login, GET /turmas, POST /turmas, GET /turmas/{id}/alunos, POST /chamada, etc.
-Autenticação e Autorização:
-Implemente um sistema de login seguro.
-Garanta que cada endpoint só possa ser acessado por perfis autorizados (ex: um aluno não pode criar uma turma).
-Regras de Negócio:
-Codifique todas as operações de criação, leitura, atualização e exclusão (CRUD) para as entidades definidas na Tarefa 3.
-Conexão com o Frontend: Integre a API com o frontend desenvolvido na Tarefa 2, substituindo os dados mocados por chamadas reais.
-Entregável da Tarefa 4:
+# Tecnologias Utilizadas
 
-Código-fonte do backend com a API totalmente funcional e integrada ao frontend.
+*   Frontend
+    *   HTML
+    *   CSS
+    *   JavaScript
+*   Backend
+    *   JavaScript
+        *   Express
+        *   dotenv
+        *   mysql2
+        *   jsonwebtoken
+        *   bcrypt
+        *   cors
+*   Banco de Dados
+    *   MySQL
+
+# Dificuldades e Aprendizados
+
+Como maior dificuldade tivemos a realização do formulário de notas e presença dos alunos. Como é uma grande tabela que é enviada como formulário, não descobrimos como fazer de maneira correta no tempo que nos foi disponibilizado.
